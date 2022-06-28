@@ -19,10 +19,10 @@ def format_key_code(state, key_code):
         output_key = key_code[-1].lower()
 
         if state["isControlPressed"]:
-            output_key = f" [CTRL + {output_key} ]"
+            output_key = f" [CTRL + {output_key} ] "
 
         if state["isAltPressed"]:
-            output_key = f" [ALT + {output_key} ]"
+            output_key = f" [ALT + {output_key} ] "
 
         if state["isShiftPressed"]:
             output_key = output_key.upper()
@@ -79,7 +79,6 @@ def main():
                 key_code = codes_dict.get(str(code))
                 # print("Event type %u, code %s, value %u at %d.%d" % \
                 #    (type, codes_dict.get(str(code)), value, tv_sec, tv_usec))
-
                 if is_key_event_type and is_key_pressed:
                     # print(codes_dict.get(str(code)))
                     manage_state(state, key_code, True)
