@@ -68,8 +68,7 @@ def main():
     EVENT_SIZE = struct.calcsize(FORMAT)
 
     with open(infile_path, "rb") as event_file:
-        event = event_file.read(EVENT_SIZE)
-        while event:
+        while event := event_file.read(EVENT_SIZE):
             tv_sec, tv_usec, type, code, value = struct.unpack(FORMAT, event)
             is_key_pressed = True if (value == 1 or value == 2) else False
             is_key_released = True if value == 0 else False
@@ -88,8 +87,6 @@ def main():
                     print(output_key, end="", flush=True)
                 elif is_key_event_type and is_key_released:
                     manage_state(state, key_code, False)
-
-            event = event_file.read(EVENT_SIZE)
 
 
 if __name__ == "__main__":
