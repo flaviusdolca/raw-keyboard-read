@@ -1,8 +1,35 @@
 #!/usr/bin/python
 import struct
-import time
 import sys
 from utils import generate_key_code_dict, get_keyboard_event, NoKeyboardFound
+
+
+def format_key_code(state, key_code):
+    ALPHANUMERIC_KEY_CODE_SIZE = 5
+    output_key = ""
+
+    if key_code == "KEY_SPACE":
+        output_key = " "
+    if key_code == "KEY_BACKSPACE":
+        output_key = "\b" + " " + "\b"
+    if key_code == "KEY_ENTER":
+        output_key = "\n"
+
+    if len(key_code) == ALPHANUMERIC_KEY_CODE_SIZE:
+        output_key = key_code[-1].lower()
+
+        if state["isControlPressed"]:
+            output_key = f" [CTRL + {output_key} ]"
+
+        if state["isAltPressed"]:
+            output_key = f" [ALT + {output_key} ]"
+
+        if state["isShiftPressed"]:
+            output_key = output_key.upper()
+
+        if state["isCapsLock"]:
+            output_key = output_key.upper()
+    return output_key
 
 
 def manage_state(state, key_code, isPressed):
@@ -28,7 +55,6 @@ def main():
     }
 
     codes_dict = generate_key_code_dict()
-    ALPHANUMERIC_KEY_CODE_SIZE = 5
 
     try:
         eventCode = get_keyboard_event()
@@ -52,36 +78,14 @@ def main():
             # Events with code, type and value == 0 are "separator" events
             if type != 0 or code != 0 or value != 0:
                 key_code = codes_dict.get(str(code))
-                output_key = ""
                 # print("Event type %u, code %s, value %u at %d.%d" % \
                 #    (type, codes_dict.get(str(code)), value, tv_sec, tv_usec))
 
                 if is_key_event_type and is_key_pressed:
                     # print(codes_dict.get(str(code)))
                     manage_state(state, key_code, True)
-
-                    if key_code == "KEY_SPACE":
-                        output_key = " "
-                    if key_code == "KEY_BACKSPACE":
-                        output_key = "\b" + " " + "\b"
-                    if key_code == "KEY_ENTER":
-                        output_key = "\n"
-                    if len(key_code) == ALPHANUMERIC_KEY_CODE_SIZE:
-                        output_key = key_code[-1].lower()
-                        if state["isControlPressed"]:
-                            output_key = " [CTRL + " + output_key + "] "
-
-                        if state["isAltPressed"]:
-                            output_key = " [ALT + " + output_key + "] "
-
-                        if state["isShiftPressed"]:
-                            output_key = output_key.upper()
-
-                        if state["isCapsLock"]:
-                            output_key = output_key.upper()
-
+                    output_key = format_key_code(state, key_code)
                     print(output_key, end="", flush=True)
-
                 elif is_key_event_type and is_key_released:
                     manage_state(state, key_code, False)
 

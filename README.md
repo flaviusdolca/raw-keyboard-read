@@ -3,7 +3,7 @@ This  is an example of how to read keyboard keys events from event file.
 
 ## Usage
 ```
-$ sudo main.py
+$ sudo ./main.py
 ```
 
 ### Related links
