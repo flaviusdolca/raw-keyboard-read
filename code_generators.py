@@ -17,8 +17,6 @@ def generate_enum_file():
         file_content += "class KeyCodes(Enum):\n"
         for key in codes:
             try:
-                pass
-                int(codes[key], base=0)
                 file_content += f"\t{key} =  {int(codes[key], base=0)}\n"
             except ValueError:
                 if "_MAX" in codes[key]:
