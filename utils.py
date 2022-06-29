@@ -25,14 +25,22 @@ def get_keyboard_event():
 
 def format_key_code(state, key_code):
     ALPHANUMERIC_KEY_CODE_SIZE = 5
-    output_key = ""
+    output_key = "[UNKNOWN_KEY]"
 
     if key_code == KeyCodes.KEY_SPACE:
         output_key = " "
     if key_code == KeyCodes.KEY_BACKSPACE:
-        output_key = "\b" + " " + "\b"
+        output_key = "[\\b]"
     if key_code == KeyCodes.KEY_ENTER:
         output_key = "\n"
+    if key_code == KeyCodes.KEY_TAB:
+        output_key = "[\\t]"
+    if key_code == KeyCodes.KEY_DOT:
+        output_key = "." if not state.is_shift_pressed else ":"
+    if key_code == KeyCodes.KEY_COMMA:
+        output_key = "," if not state.is_shift_pressed else ";"
+    if key_code in [KeyCodes.KEY_LEFTSHIFT, KeyCodes.KEY_RIGHTSHIFT, KeyCodes.KEY_LEFTCTRL, KeyCodes.KEY_RIGHTCTRL, KeyCodes.KEY_LEFTALT, KeyCodes.KEY_RIGHTALT]:
+        output_key = ""
 
     if len(key_code.name) == ALPHANUMERIC_KEY_CODE_SIZE:
         output_key = key_code.name[-1].lower()

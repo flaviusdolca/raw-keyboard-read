@@ -37,7 +37,11 @@ def main():
                 # print(KeyCodes(code).name)
                 state.manage_state(key_code, True)
                 output_key = format_key_code(state, key_code)
-                print(output_key, end="", flush=True)
+                if output_key != "[UNKNOWN_KEY]":
+                    print(output_key, end="", flush=True)
+                else:
+                    print(f"[{key_code.name[4:]}]", end="", flush=True)
+
             elif is_key_event_type and is_key_released:
                 state.manage_state(key_code, False)
 
