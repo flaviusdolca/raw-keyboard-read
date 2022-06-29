@@ -2,7 +2,7 @@ class NoKeyboardFound(RuntimeError):
     pass
 
 
-def generate_key_code_dict(event_codes_file_path="input-event-codes.h"):
+def generate_key_code_dict(event_codes_file_path="/usr/include/linux/input-event-codes.h"):
     codes = {}
     with open(event_codes_file_path) as fp:
         for line in fp:
