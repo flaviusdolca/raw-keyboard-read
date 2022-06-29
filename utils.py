@@ -1,5 +1,6 @@
 from key_codes import KeyCodes
 
+
 class NoKeyboardFound(RuntimeError):
     pass
 

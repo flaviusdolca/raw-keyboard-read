@@ -3,7 +3,7 @@ import struct
 import sys
 from utils import get_keyboard_event, format_key_code, NoKeyboardFound
 from keyboard_state import KeyboardState
-from key_codes import  KeyCodes
+from key_codes import KeyCodes
 
 
 def main():
@@ -25,10 +25,10 @@ def main():
             is_key_pressed = value in [1, 2]
             is_key_released = value == 0
             is_key_event_type = type == 1
-            
+
             if is_separator_event:
                 continue
-            
+
             key_code = KeyCodes(code)
 
             # print("Event type %u, code %s, value %u at %d.%d" % \
