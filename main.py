@@ -59,8 +59,7 @@ def main():
     try:
         eventCode = get_keyboard_event()
     except NoKeyboardFound:
-        print("No keyboard found")
-        sys.exit()
+        sys.exit("No keyboard found")
 
     infile_path = "/dev/input/" + eventCode
 
