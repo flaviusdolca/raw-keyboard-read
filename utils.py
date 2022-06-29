@@ -1,15 +1,7 @@
+from key_codes import KeyCodes
+
 class NoKeyboardFound(RuntimeError):
     pass
-
-
-def generate_key_code_dict(event_codes_file_path="/usr/include/linux/input-event-codes.h"):
-    codes = {}
-    with open(event_codes_file_path) as fp:
-        for line in fp:
-            if "#define" in line and "KEY_" in line:
-                code, num = line.split()[1:3]
-                codes[num] = code
-    return codes
 
 
 def get_keyboard_event():
@@ -29,19 +21,20 @@ def get_keyboard_event():
                 section += line
     raise NoKeyboardFound()
 
+
 def format_key_code(state, key_code):
     ALPHANUMERIC_KEY_CODE_SIZE = 5
     output_key = ""
 
-    if key_code == "KEY_SPACE":
+    if key_code == KeyCodes.KEY_SPACE:
         output_key = " "
-    if key_code == "KEY_BACKSPACE":
+    if key_code == KeyCodes.KEY_BACKSPACE:
         output_key = "\b" + " " + "\b"
-    if key_code == "KEY_ENTER":
+    if key_code == KeyCodes.KEY_ENTER:
         output_key = "\n"
 
-    if len(key_code) == ALPHANUMERIC_KEY_CODE_SIZE:
-        output_key = key_code[-1].lower()
+    if len(key_code.name) == ALPHANUMERIC_KEY_CODE_SIZE:
+        output_key = key_code.name[-1].lower()
 
         if state.is_control_pressed:
             output_key = f" [CTRL + {output_key} ] "

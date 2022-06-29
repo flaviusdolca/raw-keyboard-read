@@ -1,14 +1,13 @@
 #!/usr/bin/python
 import struct
 import sys
-from utils import generate_key_code_dict, get_keyboard_event, format_key_code, NoKeyboardFound
+from utils import get_keyboard_event, format_key_code, NoKeyboardFound
 from keyboard_state import KeyboardState
+from key_codes import  KeyCodes
 
 
 def main():
     state = KeyboardState()
-    codes_dict = generate_key_code_dict()
-
     try:
         eventCode = get_keyboard_event()
     except NoKeyboardFound:
@@ -30,11 +29,12 @@ def main():
             if is_separator_event:
                 continue
             
-            key_code = codes_dict.get(str(code))
+            key_code = KeyCodes(code)
+
             # print("Event type %u, code %s, value %u at %d.%d" % \
-            #    (type, codes_dict.get(str(code)), value, tv_sec, tv_usec))
+            #    (type, KeyCodes(code).name, value, tv_sec, tv_usec))
             if is_key_event_type and is_key_pressed:
-                # print(codes_dict.get(str(code)))
+                # print(KeyCodes(code).name)
                 state.manage_state(key_code, True)
                 output_key = format_key_code(state, key_code)
                 print(output_key, end="", flush=True)
