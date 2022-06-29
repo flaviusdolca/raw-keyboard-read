@@ -1,5 +1,5 @@
 # raw-keyboard-read
-This  is an example of how to read keyboard keys events from event file.
+This project is an example on how to read keyboard input from its event file in the /dev/input/ directory.
 
 ## Usage
 ```
